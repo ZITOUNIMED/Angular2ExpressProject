@@ -1,6 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
+var StockServiceModule = require('./stock.service');
 
 // declare axios for making http requests
 const axios = require('axios');
@@ -11,8 +12,11 @@ router.get('/', (req, res) => {
   res.send('api works');
 });
 
+var stockService = new StockServiceModule.StockService();
+var stocks = stockService.getStocks();
 // Get all positions
 router.get('/stocks', (req, res) => {
+  res.json(stocks);
   // Get posts from the mock API
   // This should ideally be replaced with a service that connects to MongoDB
   // axios.get(`${API}/posts`)
@@ -22,22 +26,23 @@ router.get('/stocks', (req, res) => {
   //   .catch(error => {
   //     res.status(500).send(error)
   //   });
-  res.json(
-    [
-      {
-        "ref": "Stock1",
-        "quantite": 250
-      },
-      {
-        "ref": "Stock2",
-        "quantite": 150
-      },
-      {
-        "ref": "Stock3",
-        "quantite": 284
-      }
-    ]
-  );
+
+  // res.json(
+  //   [
+  //     {
+  //       "ref": "Stock1",
+  //       "quantite": 250
+  //     },
+  //     {
+  //       "ref": "Stock2",
+  //       "quantite": 150
+  //     },
+  //     {
+  //       "ref": "Stock3",
+  //       "quantite": 284
+  //     }
+  //   ]
+  // );
 });
 
 module.exports = router;
